@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Mpv Test</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="login">Login</string>
+    <string name="login_with_social">Or login with social media</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+
+    <string name="register">Register Now</string>
+    <string name="title_activity_setting">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+</resources>
