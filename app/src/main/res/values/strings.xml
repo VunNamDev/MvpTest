@@ -4,10 +4,14 @@
     <string name="login">Login</string>
     <string name="login_with_social">Or login with social media</string>
     <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="login_error">Error, check email and password</string>
 
     <string name="register">Register Now</string>
     <string name="title_activity_setting">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="more_app_key_word">More App Key Word</string>
+    <string name="labal_no_internet_connection">Labal no internet connection</string>
+
 
 </resources>

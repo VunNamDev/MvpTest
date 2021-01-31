@@ -21,9 +21,20 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="20dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/icon" />
+
+            <TextView
+                android:id="@+id/txtError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+
+                android:textColor="@color/red"
+
+                />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -45,7 +56,8 @@
                         android:layout_height="50dp"
                         android:background="@drawable/login_border"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
+                        android:paddingRight="10dp"
+                        android:text="vunam.dev@gmail.com" />
 
                     <EditText
                         android:id="@+id/txtPassword"
@@ -54,7 +66,8 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/login_border"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
+                        android:paddingRight="10dp"
+                        android:text="123455" />
 
                     <TextView
                         android:layout_width="match_parent"

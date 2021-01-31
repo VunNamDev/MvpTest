@@ -23,6 +23,7 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
     private LinearLayout mButtonSignIn;
     private TextView mButtonSignUp;
     private SignInPresenter mSignInPresenter;
+    TextView txtError;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
         mTextPassword = findViewById(R.id.txtPassword);
         mButtonSignIn = findViewById(R.id.btnLogin);
         mButtonSignUp = findViewById(R.id.btnLogout);
+        txtError = findViewById(R.id.txtError);
     }
 
     private void registerListener() {
@@ -80,10 +82,12 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
     public void signInSuccess() {
         Toast.makeText(this, "Sign In Success!", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override
     public void signInFailure(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        txtError.setText(getString(R.string.login_error));
     }
 }
