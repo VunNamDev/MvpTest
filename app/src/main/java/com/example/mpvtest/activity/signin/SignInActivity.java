@@ -49,7 +49,7 @@ public class SignInActivity extends BaseActivity implements SignInContract.View,
     }
 
     private void initPresenter() {
-        mSignInPresenter = new SignInPresenter();
+        mSignInPresenter = new SignInPresenter(SignInActivity.this);
         mSignInPresenter.setView(this);
     }
 

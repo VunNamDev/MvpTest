@@ -1,5 +1,6 @@
 package com.example.mpvtest.api.repositories;
 
+import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
 
@@ -24,7 +25,8 @@ public class AuthRepositories implements _AuthRepositories {
 
 
     @Override
-    public void login(String userName, String password) {
+    public void login(String userName, String password, Context context) {
+
         HashMap params = new HashMap<String, String>() {{
             put("Content-Type", "application/x-www-form-urlencoded");
             put("access_token", ApiConstant.masterKey);
@@ -35,7 +37,7 @@ public class AuthRepositories implements _AuthRepositories {
         HashMap header = new HashMap<String, String>() {{
             put("Authorization", basicAuth);
         }};
-        ApiClient.request(ApiConstant.login, params, header, this.onTaskCompleted);
+        ApiClient.request(ApiConstant.login, params, header, this.onTaskCompleted,context);
 
 
     }
@@ -57,7 +59,7 @@ public class AuthRepositories implements _AuthRepositories {
 }
 
 interface _AuthRepositories {
-    void login(String userName, String password);
+    void login(String userName, String password, Context context);
 
     void register();
 

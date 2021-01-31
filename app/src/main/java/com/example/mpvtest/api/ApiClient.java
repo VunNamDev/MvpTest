@@ -1,5 +1,6 @@
 package com.example.mpvtest.api;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -41,7 +42,7 @@ public class ApiClient {
 
     public static void  request(BaseApi baseApi,
                                   HashMap<String, String> params,
-                                  HashMap<String, String> headers, OnTaskCompleted onTaskCompleted) {
+                                  HashMap<String, String> headers, OnTaskCompleted onTaskCompleted,Context context) {
         initOkHttp(headers);
         ANRequest request = null;
         if (baseApi.getMethod() == Method.GET) {
@@ -79,7 +80,7 @@ public class ApiClient {
                     .setOkHttpClient(okHttpClient)
                     .build();
         }
-        Task task = new Task(onTaskCompleted);
+        Task task = new Task(onTaskCompleted, context);
         task.execute(request);
 
     }
@@ -114,17 +115,20 @@ public class ApiClient {
 
         private Exception exception;
         private OnTaskCompleted onTaskCompleted;
-
+        private  Context context;
+        private ProgressDialog mProgressDialog;
         private Task() {
         }
 
-        private Task(OnTaskCompleted onTaskCompleted) {
+        private Task(OnTaskCompleted onTaskCompleted, Context context) {
             this.onTaskCompleted = onTaskCompleted;
+            this.context = context;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            showDialog("Wait...");
         }
 
         @Override
@@ -132,7 +136,6 @@ public class ApiClient {
             HashMap<String, String> map;
 
             ANResponse response = anRequests[0].executeForJSONObject();
-
             if (response.isSuccess()) {
                 map = new HashMap<String, String>();
                 map.put("status", gsonUtil.parseBool(true));
@@ -140,9 +143,9 @@ public class ApiClient {
             } else {
                 map = new HashMap<String, String>();
                 ANError error = response.getError();
-
                 map.put("status", gsonUtil.parseBool(false));
                 map.put("errorCode", gsonUtil.parseInt(error.getErrorCode()));
+//                getErrorCode = 0 => TIMEOUT
                 map.put("errorBody", gsonUtil.parseString(error.getErrorBody()));
             }
 
@@ -157,7 +160,36 @@ public class ApiClient {
         @Override
         protected void onPostExecute(HashMap<String, String> stringStringHashMap) {
             super.onPostExecute(stringStringHashMap);
+            hideDialog();
             onTaskCompleted.onTaskCompleted(stringStringHashMap);
+
+        }
+        protected void showDialog(String message) {
+            if (!isShowingProgressDialog()) {
+                mProgressDialog = new ProgressDialog(context);
+                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mProgressDialog.setCancelable(true);
+                mProgressDialog.setCanceledOnTouchOutside(false);
+            }
+            mProgressDialog.setMessage(message);
+            mProgressDialog.show();
+        }
+
+        public void updateProgressDialogMessage(String message) {
+            mProgressDialog.setMessage(message);
+        }
+
+        protected void hideDialog() {
+            if (isShowingProgressDialog()) {
+                mProgressDialog.dismiss();
+            }
+        }
+
+        protected boolean isShowingProgressDialog() {
+            if (mProgressDialog == null) {
+                return false;
+            }
+            return mProgressDialog.isShowing();
         }
     }
 }
